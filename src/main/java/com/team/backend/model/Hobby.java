@@ -1,18 +1,19 @@
-package com.team.backend.test;
-
+package com.team.backend.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
 @Entity
-@Table(name = "user")
-public class User {
+@Setter
+@Getter
+@Table(name = "hobby")
+public class Hobby
+{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    private String name;
-    private String email;
+
+    private String hobby_name;
+
 }
