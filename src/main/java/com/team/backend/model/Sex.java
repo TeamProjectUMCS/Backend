@@ -1,4 +1,4 @@
-package com.team.backend.test;
+package com.team.backend.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -7,12 +7,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "user")
-public class User {
+@Table(name = "sex")
+public class Sex
+{
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
+    @Getter
     private String name;
-    private String email;
+
 }
