@@ -14,7 +14,6 @@ public class Sex
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Getter
     private String name;
 
 }
