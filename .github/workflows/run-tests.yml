@@ -21,11 +21,11 @@ jobs:
         java-version: '23'
         distribution: 'adopt'
     - name: Build with Maven
-      working-directory: ./backend
+      working-directory: ./Backend
       run: mvn clean install
     - name: Run tests
       id: tests
-      working-directory: ./backend
+      working-directory: ./Backend
       run: |
         mvn test > test-results.txt
 
