@@ -1,6 +1,6 @@
 package com.team.backend.model.dto;
 
-public record LoginResponse(
+public record LoginResponseDto(
         String username,
         String login,
         String password
