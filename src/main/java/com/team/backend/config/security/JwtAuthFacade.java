@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.team.backend.config.security.dto.JwtResponseDto;
 import com.team.backend.config.security.dto.TokenRequestDto;
+import com.team.backend.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,7 +31,9 @@ public class JwtAuthFacade {
         final User principal = (User) authenticate.getPrincipal();
         String token = createToken(principal);
         String login = principal.getUsername();
-        Long id = userRepository.findByLogin(login).get().getId();
+        Long id = userRepository.findByLogin(login)
+                .orElseThrow(() -> new RuntimeException("User not found"))
+                .getId();
 
         return new JwtResponseDto(login, token, id);
     }
@@ -41,7 +44,7 @@ public class JwtAuthFacade {
         ZonedDateTime localTime = LocalDateTime.now().atZone(ZoneId.of("Europe/Warsaw"));
         Instant now = localTime.toInstant();
         Instant expireAt = now.plus(Duration.ofHours(12));
-        String issuer = "CareTrack Service";
+        String issuer = "TeamProject Backend";
 
         return JWT.create()
                 .withSubject(user.getUsername())

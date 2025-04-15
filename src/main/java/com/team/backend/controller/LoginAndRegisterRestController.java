@@ -1,7 +1,9 @@
 package com.team.backend.controller;
 
 
-import com.team.backend.model.dto.LoginResponse;
+import com.team.backend.model.dto.LoginResponseDto;
+import com.team.backend.model.dto.RegisterRequest;
+import com.team.backend.model.dto.RegisterResponseDto;
 import com.team.backend.model.mapper.LoginAndRegisterMapper;
 import com.team.backend.service.LoginAndRegisterService;
 import jakarta.validation.Valid;
@@ -21,9 +23,9 @@ public class LoginAndRegisterRestController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<RegisterResponseDto> registerUser(@RequestBody @Valid RegisterRequestDto registerRequestDto) {
-        final LoginResponse medicalDoctorResponse =
-                loginAndRegisterService.register(mapper.fromRegisterRequestDto(registerRequestDto));
+    public ResponseEntity<RegisterResponseDto> registerUser(@RequestBody @Valid RegisterRequest registerRequest) {
+        final LoginResponseDto medicalDoctorResponse =
+                loginAndRegisterService.register(mapper.fromRegisterRequestDto(registerRequest));
         String responseMessage = "REGISTERED";
         final RegisterResponseDto registered =
                 mapper.fromUserResponseDto(medicalDoctorResponse, responseMessage);
@@ -33,26 +35,16 @@ public class LoginAndRegisterRestController {
     }
 
     @GetMapping("/find/{login}")
-    public ResponseEntity<LoginResponse> findUser(@PathVariable String login) {
-        final LoginResponse byUsername = loginAndRegisterService.findByUsername(login);
+    public ResponseEntity<LoginResponseDto> findUser(@PathVariable String login) {
+        final LoginResponseDto byUsername = loginAndRegisterService.findByLogin(login);
         log.info("User found: {}", byUsername);
 
         return ResponseEntity.ok(byUsername);
     }
 
-    @PutMapping("/update/{login}")
-    public ResponseEntity<LoginResponse> updateUser(
-            @PathVariable String login, @RequestBody @Valid RegisterRequestDto registerRequestDto) {
-        final LoginResponse body =
-                loginAndRegisterService.updateByLogin(
-                        login, mapper.fromRegisterRequestDto(registerRequestDto));
-        log.info("User updated: {}", body);
-
-        return ResponseEntity.ok(body);
-    }
 
     @DeleteMapping("/delete/{login}")
-    public ResponseEntity<LoginResponse> deleteUser(@PathVariable String login) {
+    public ResponseEntity<LoginResponseDto> deleteUser(@PathVariable String login) {
         log.info("Deleting user: {}", login);
 
         return ResponseEntity.ok(loginAndRegisterService.deleteUser(login));
