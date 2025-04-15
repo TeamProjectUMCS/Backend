@@ -9,7 +9,6 @@ on:
       - 'main'
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
     
@@ -21,11 +20,9 @@ jobs:
         java-version: '23'
         distribution: 'adopt'
     - name: Build with Maven
-      working-directory: ./Backend
       run: mvn clean install
     - name: Run tests
       id: tests
-      working-directory: ./Backend
       run: |
         mvn test > test-results.txt
 
@@ -34,12 +31,12 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: test-results
-        path: backend/target/surefire-reports
+        path: target/surefire-reports
 
     - name: Notify Success
       if: ${{ steps.tests.outcome == 'success' }}
       run: |
-        LAST_LINES=$(tail -n 10 backend/test-results.txt)
+        LAST_LINES=$(tail -n 10 test-results.txt)
         MESSAGE="All tests have passed successfully. The commit can be merged.
         $LAST_LINES"
         gh issue create --title "Tests passed" --body "$MESSAGE" --label "CI/CD" --assignee ${{ github.actor }}
@@ -49,10 +46,9 @@ jobs:
     - name: Notify Failure  
       if: ${{ steps.tests.outcome == 'failure' }}
       run: |
-        LAST_LINES=$(tail -n 10 backend/test-results.txt)
+        LAST_LINES=$(tail -n 10 test-results.txt)
         MESSAGE="Some tests have failed. Please fix the issues before merging the commit.
         $LAST_LINES"
         gh issue create --title "Tests failed" --body "$MESSAGE" --label "CI/CD" --assignee ${{ github.actor }} 
       env:
         GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-      
