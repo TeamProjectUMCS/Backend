@@ -3,18 +3,15 @@ package com.team.backend.service;
 import com.team.backend.model.Message;
 import com.team.backend.repository.MessageRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class MessageService {
     private MessageRepository messageRepository;
-
-    public MessageService(MessageRepository messageRepository) {
-        this.messageRepository = messageRepository;
-    }
 
 
     public List<Message> findByMatchId(Long matchId) {
