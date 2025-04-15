@@ -11,8 +11,8 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class MatchService {
-    private MatchRepository matchRepository;
 
+    private final MatchRepository matchRepository;
 
     @Transactional
     public Match save(Match match) {

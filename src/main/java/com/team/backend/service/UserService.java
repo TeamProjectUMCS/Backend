@@ -11,7 +11,8 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class UserService {
-    private UserRepository userRepository;
+
+    private final UserRepository userRepository;
 
 
     public Optional<User> findById(Long userId) {

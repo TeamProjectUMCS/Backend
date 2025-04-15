@@ -11,7 +11,8 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class MessageService {
-    private MessageRepository messageRepository;
+
+    private final MessageRepository messageRepository;
 
 
     public List<Message> findByMatchId(Long matchId) {
