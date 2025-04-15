@@ -1,5 +1,7 @@
 package com.team.backend.model;
 
+import com.team.backend.model.Enum.Preference;
+import com.team.backend.model.Enum.Sex;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -29,6 +31,16 @@ public class User implements UserDetails {
     @NonNull
     @Column(nullable = false)
     private String password;
+
+    @NonNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "sex", nullable = false)
+    private Sex sex;
+
+    @NonNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "preference", nullable = false)
+    private Preference preference;
     //@NotNull
     //private String email;
 
@@ -50,17 +62,7 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<PairStatus> pairStatuses;
 
-    @ManyToOne
-    @JoinColumn(name = "sex_id", nullable = false)
-    private Sex sex;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_preferences",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "sex_id")
-    )                                                         //tu mozliwe ze do zmiany nwm
-    private List<Sex> sexPreferences;
 
     private int age;
     private String localization;

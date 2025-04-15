@@ -1,10 +1,12 @@
 package com.team.backend.model.dto;
 
+import com.team.backend.model.Enum.Preference;
+import com.team.backend.model.Enum.Sex;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
-public record RegisterRequest (
+public record RegisterRequest(
 
         @NotNull(message = "{username.not.null}")
         @NotEmpty(message = "{username.not.empty}")
@@ -19,6 +21,9 @@ public record RegisterRequest (
         @NotNull(message = "{password.not.null}")
         @NotEmpty(message = "{password.not.empty}")
         @NotBlank(message = "{password.not.blank}")
-        String password
+        String password,
+
+        Sex sex,
+        Preference preference
 ) {
 }

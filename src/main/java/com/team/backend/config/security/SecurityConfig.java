@@ -1,6 +1,7 @@
 package com.team.backend.config.security;
 
 import com.team.backend.service.LoginAndRegisterService;
+import com.team.backend.service.PasswordEncoderService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
