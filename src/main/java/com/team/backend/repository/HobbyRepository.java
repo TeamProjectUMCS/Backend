@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface HobbyRepository extends JpaRepository<Hobby, Long> {
-    Optional<Hobby> findByHobby_name(String hobby_name);
+    Optional<Hobby> findByHobbyName(String hobbyName);
 
     Optional<Hobby> findById(Long id);
 }

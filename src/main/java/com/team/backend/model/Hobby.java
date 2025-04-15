@@ -14,6 +14,6 @@ public class Hobby
     @Column(name = "id", nullable = false)
     private Long id;
 
-    private String hobby_name;
+    private String hobbyName;
 
 }

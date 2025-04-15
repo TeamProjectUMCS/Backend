@@ -18,7 +18,7 @@ public class HobbyService {
     }
 
     public Optional<Hobby> findHobbyByName(String hobbyName) {
-        return hobbyRepository.findByHobby_name(hobbyName);
+        return hobbyRepository.findByHobbyName(hobbyName);
     }
 
     public Optional<Hobby> findHobbyById(Long id) {

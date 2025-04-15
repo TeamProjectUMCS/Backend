@@ -43,8 +43,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.csrf(AbstractHttpConfigurer::disable)
+                .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
                         //auth
+
                         .requestMatchers("/login/**").permitAll()
                         .requestMatchers("/register/**").permitAll()
                         // wszystkie endpointy
