@@ -10,8 +10,12 @@ import java.util.List;
 
 @Service
 public class MessageService {
-    @Autowired
     private MessageRepository messageRepository;
+
+    public MessageService(MessageRepository messageRepository) {
+        this.messageRepository = messageRepository;
+    }
+
 
     public List<Message> findByMatchId(Long matchId) {
         return messageRepository.findByMatchId(matchId);

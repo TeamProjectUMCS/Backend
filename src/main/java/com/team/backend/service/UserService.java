@@ -10,8 +10,11 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-    @Autowired
     private UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public Optional<User> findById(Long userId) {
         return userRepository.findById(userId);

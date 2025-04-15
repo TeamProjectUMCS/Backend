@@ -10,8 +10,11 @@ import java.util.List;
 
 @Service
 public class MatchService {
-    @Autowired
     private MatchRepository matchRepository;
+
+    public MatchService(MatchRepository matchRepository) {
+        this.matchRepository = matchRepository;
+    }
 
     @Transactional
     public Match save(Match match) {
