@@ -5,6 +5,7 @@ import com.team.backend.model.dto.LoginResponseDto;
 import com.team.backend.model.dto.RegisterRequest;
 import com.team.backend.model.dto.RegisterResponseDto;
 import com.team.backend.model.mapper.LoginAndRegisterMapper;
+import com.team.backend.model.mapper.UserMapper;
 import com.team.backend.service.LoginAndRegisterService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -20,18 +21,16 @@ public class LoginAndRegisterRestController {
 
     private final LoginAndRegisterService loginAndRegisterService;
     private final LoginAndRegisterMapper mapper;
+    private final UserMapper userMapper;
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<RegisterResponseDto> registerUser(@RequestBody @Valid RegisterRequest registerRequest) {
-        final LoginResponseDto medicalDoctorResponse =
-                loginAndRegisterService.register(mapper.fromRegisterRequestDto(registerRequest));
-        String responseMessage = "REGISTERED";
-        final RegisterResponseDto registered =
-                mapper.fromUserResponseDto(medicalDoctorResponse, responseMessage);
-        log.info("User registered: {}", registered);
+        final RegisterResponseDto userResponse = loginAndRegisterService.register(registerRequest);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(registered);
+        log.info("User registered: {}", userResponse);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(userResponse);
     }
 
     @GetMapping("/find/{login}")
