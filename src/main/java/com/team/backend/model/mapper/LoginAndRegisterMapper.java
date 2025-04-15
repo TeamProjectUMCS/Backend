@@ -17,7 +17,4 @@ public class LoginAndRegisterMapper {
         return new LoginRequest(dto.username(), dto.login(), passwordEncoder.encode(dto.password()));
     }
 
-    public RegisterResponseDto fromUserResponseDto(LoginResponseDto dto, String message) {
-        return new RegisterResponseDto(dto.username(),dto.login(), message);
-    }
 }

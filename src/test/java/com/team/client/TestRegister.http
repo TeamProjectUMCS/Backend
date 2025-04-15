@@ -1,0 +1,21 @@
+### Register a new user
+POST http://localhost:8080/register
+Content-Type: application/json
+
+{
+  "username": "testUser",
+  "login": "testLogin",
+  "password": "password123",
+  "sex" : "MALE",
+  "preference": "MEN"
+}
+
+
+### Find a user by login
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "login": "testLogin",
+  "password": "password123"
+}
