@@ -1,17 +1,22 @@
 package com.team.backend.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.team.backend.config.security.JwtConfigProperties;
+import com.team.backend.model.Enum.Preference;
+import com.team.backend.model.Enum.Sex;
 import com.team.backend.model.dto.LoginRequest;
 import com.team.backend.model.dto.LoginResponseDto;
 import com.team.backend.model.dto.RegisterRequest;
 import com.team.backend.model.dto.RegisterResponseDto;
 import com.team.backend.model.mapper.LoginAndRegisterMapper;
 import com.team.backend.service.LoginAndRegisterService;
+import com.team.backend.service.PasswordEncoderService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
@@ -37,6 +42,12 @@ class LoginAndRegisterRestControllerTest {
     @MockitoBean
     private LoginAndRegisterMapper mapper;
 
+    @MockitoBean
+    private PasswordEncoderService passwordEncoderService;
+
+    @MockitoBean
+    private JwtConfigProperties jwtConfigProperties;
+
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -44,15 +55,18 @@ class LoginAndRegisterRestControllerTest {
     @WithMockUser
     void shouldRegisterUserSuccessfully() throws Exception {
         // Given
-        RegisterRequest registerRequest = new RegisterRequest("testUser", "testLogin", "password123");
+        RegisterRequest registerRequest = new RegisterRequest("testUser", "testLogin", "password123", Sex.MALE, Preference.BOTH);
         LoginRequest loginRequest = new LoginRequest("testUser", "testLogin", "encodedPassword123");
         LoginResponseDto loginResponseDto = new LoginResponseDto("testUser", "testLogin", "testPassword");
         RegisterResponseDto expectedResponse = new RegisterResponseDto("testUser", "testLogin", "REGISTERED");
 
         // When
         when(mapper.fromRegisterRequestDto(registerRequest)).thenReturn(loginRequest);
-        when(loginAndRegisterService.register(loginRequest)).thenReturn(loginResponseDto);
-        when(mapper.fromUserResponseDto(loginResponseDto, "REGISTERED")).thenReturn(expectedResponse);
+        when(loginAndRegisterService.register(registerRequest)).thenReturn(expectedResponse);
+        when(mapper.fromRegisterRequestDto(registerRequest)).thenReturn(loginRequest);
+        when(passwordEncoderService.encodePassword(any())).thenReturn("encodedPassword123");
+
+
 
         // Then
         mockMvc.perform(post("/register")

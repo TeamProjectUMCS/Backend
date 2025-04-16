@@ -1,9 +1,16 @@
 package com.team.backend.model.Enum;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+
+@Getter
 public enum Preference {
+    @JsonProperty("Men")
     MEN("Men"),
+    @JsonProperty("Women")
     WOMEN("Women"),
+    @JsonProperty("Both")
     BOTH("Both");
 
     private final String displayName;
@@ -12,7 +19,4 @@ public enum Preference {
         this.displayName = displayName;
     }
 
-    public String getDisplayName() {
-        return displayName;
-    }
 }
