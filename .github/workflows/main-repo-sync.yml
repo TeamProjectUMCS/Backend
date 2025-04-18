@@ -23,7 +23,7 @@ jobs:
           curl -X POST \
           -H "Authorization: token ${{ secrets.PAT_TOKEN }}" \
           -H "Accept: application/vnd.github.v3+json" \
-          https://api.github.com/repos/TeamProjectUMCS/Backend/dispatches \
+          https://api.github.com/repos/TeamProjectUMCS/TeamProject/dispatches \
           -d "{
           \"event_type\": \"submodule-main-updated\",
           \"client_payload\": {
@@ -31,3 +31,5 @@ jobs:
           \"commit\": \"$GITHUB_SHA\"
           }
           }"
+
+          
