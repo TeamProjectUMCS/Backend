@@ -4,6 +4,7 @@ import com.google.api.gax.paging.Page;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+@Log4j2
 @Service
 public class CloudStorageService {
 
@@ -50,6 +52,7 @@ public class CloudStorageService {
 
     public List<String> getUserMediaUrls(String user) {
         String prefix = mediaFolder + "/" + user + "/";
+        log.debug("User link = {}/{}/", mediaFolder, user);
         Page<Blob> blobs = storage.list(bucketName, Storage.BlobListOption.prefix(prefix));
 
         List<String> mediaUrls = new ArrayList<>();
