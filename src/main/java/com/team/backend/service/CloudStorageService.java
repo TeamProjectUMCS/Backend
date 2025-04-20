@@ -1,6 +1,7 @@
 package com.team.backend.service;
 
 import com.google.api.gax.paging.Page;
+import com.google.auth.Credentials;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
@@ -65,6 +66,10 @@ public class CloudStorageService {
         }
 
         return mediaUrls;
+    }
+
+    public Credentials checkStorage(){
+        return storage.getOptions().getCredentials();
     }
 
     public void deleteFile(String objectName) {

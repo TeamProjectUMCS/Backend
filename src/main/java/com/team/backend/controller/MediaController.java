@@ -29,9 +29,14 @@ public class MediaController {
     public ResponseEntity<Map<String, String>> uploadMedia(
             @RequestParam("file") MultipartFile file,
             @RequestParam("type") String type,
-            Authentication authentication) {
+            Authentication authentication){
+        log.debug("Credentials when upload : {}",storageService.checkStorage() );
+
+        log.debug("UPLOAD REQUEST INTIATED");
         log.debug("Upload request received. File name: {}, Type: {}, Content-Type: {}",
                 file.getOriginalFilename(), type, file.getContentType());
+        log.debug("Request Content-Type: {}", file.getContentType());
+        log.debug("File size: {}", file.getSize());
 
         try {
             String user = (String) authentication.getPrincipal();
@@ -60,6 +65,8 @@ public class MediaController {
         log.debug("Fetching media for user: {}", user);
         List<String> mediaUrls = storageService.getUserMediaUrls(user);
         log.debug("Media URLs fetched: {}", mediaUrls);
+
+        log.debug("Credentials when list : {}, {}", user,storageService.checkStorage() );
 
         return ResponseEntity.ok(mediaUrls);
     }
