@@ -236,10 +236,7 @@
                             <artifactId>spring-boot-configuration-processor</artifactId>
                             <version>${spring-boot.version}</version>
                         </path>
-                        <argLine>
-                            -javaagent:${settings.localRepository}/org/mockito/mockito-core/${mockito.version}/mockito-core-${mockito.version}.jar
-                            -Xshare:off
-                        </argLine>
+
                     </annotationProcessorPaths>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
