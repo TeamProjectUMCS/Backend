@@ -46,9 +46,10 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
                         //auth
-
                         .requestMatchers("/login/**").permitAll()
                         .requestMatchers("/register/**").permitAll()
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/media/**").authenticated()
                         // wszystkie endpointy
                         //.requestMatchers(HttpMethod.GET, "/patient/{accessId}").permitAll()
                         .anyRequest().authenticated()
