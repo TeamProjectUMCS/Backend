@@ -62,14 +62,14 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<PairStatus> pairStatuses;
 
-
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Profile profile;
 
     private int age;
     private String localization;
     private int age_min;
     private int age_max;
     private int distancePreference;
-
 
 
     @Override
