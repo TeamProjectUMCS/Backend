@@ -24,7 +24,7 @@ WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 
 # Expose the port the app runs on
-EXPOSE 8080
+EXPOSE 3000
 
 # Start the application
 CMD ["java", "-jar", "app.jar"]
