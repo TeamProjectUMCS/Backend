@@ -46,13 +46,8 @@ class JwtAuthTokenFilter extends OncePerRequestFilter {
 
         JWTVerifier verifier = JWT.require(algorithm).build();
 
-        try {
-            DecodedJWT jwt = verifier.verify(token.substring(7));
-            return new UsernamePasswordAuthenticationToken(jwt.getSubject(), null, Collections.emptyList());
-        } catch (Exception e) {
-            log.warn("Nieprawidłowy token JWT: {}", e.getMessage());
-            return null;
-        }
+        DecodedJWT jwt = verifier.verify(token.substring(7));
 
+        return new UsernamePasswordAuthenticationToken(jwt.getSubject(), null, Collections.emptyList());
     }
 }
