@@ -3,18 +3,21 @@ package com.team.backend.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Setter
 @Getter
 @Table(name = "messages")
+@ToString
 public class Message
 {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO) // auto bo na identity cos sie psulo idk
     private Long messageId;
 
-    private int writtenBy;
+    private Long writtenBy;
 
     private String content;
 

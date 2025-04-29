@@ -30,7 +30,7 @@ class JwtAuthTokenFilter extends OncePerRequestFilter {
 
         String authorization = request.getHeader("Authorization");
         log.debug(authorization);
-        if (authorization == null) {
+        if (authorization == null || !authorization.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -46,8 +46,13 @@ class JwtAuthTokenFilter extends OncePerRequestFilter {
 
         JWTVerifier verifier = JWT.require(algorithm).build();
 
-        DecodedJWT jwt = verifier.verify(token.substring(7));
+        try {
+            DecodedJWT jwt = verifier.verify(token.substring(7));
+            return new UsernamePasswordAuthenticationToken(jwt.getSubject(), null, Collections.emptyList());
+        } catch (Exception e) {
+            log.warn("Nieprawidłowy token JWT: {}", e.getMessage());
+            return null;
+        }
 
-        return new UsernamePasswordAuthenticationToken(jwt.getSubject(), null, Collections.emptyList());
     }
 }
