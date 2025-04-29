@@ -23,4 +23,4 @@ images:
   - 'gcr.io/$PROJECT_ID/spring-backend:$COMMIT_SHA'
 
 # Timeout for the build
-timeout: '1800s'
+timeout: '2400s'
