@@ -19,3 +19,4 @@ volumes:
 #      - 'RABBITMQ_DEFAULT_USER=myuser'
 #    ports:
 #      - '5672'
+# test
