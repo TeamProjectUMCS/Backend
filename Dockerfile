@@ -5,12 +5,13 @@ WORKDIR /app
 # Copy Maven configuration files
 COPY pom.xml .
 COPY mvnw .
+COPY .mvn .
 
 # Download dependencies (this step is cached if pom.xml doesn't change)
 RUN ./mvnw dependency:go-offline -B
 
 # Copy source code
-COPY . .
+COPY src ./src
 
 # Build the application
 RUN ./mvnw package -DskipTests
