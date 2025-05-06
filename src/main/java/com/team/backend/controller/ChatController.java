@@ -1,8 +1,5 @@
 package com.team.backend.controller;
 
-import com.team.backend.model.Match;
-import com.team.backend.model.Message;
-import com.team.backend.model.User;
 import com.team.backend.model.dto.MessageRequestDto;
 import com.team.backend.model.dto.MessageResponseDto;
 import com.team.backend.service.ChatService;
@@ -21,7 +18,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
-
 @Controller
 @Log4j2
 @RequiredArgsConstructor
@@ -35,9 +31,22 @@ public class ChatController {
 
     @MessageMapping("/chat/{matchId}")
     public void processMessage(@DestinationVariable String matchId, MessageRequestDto messageRequestDto, Authentication authentication) {
+        log.info("Received message for match {}: {}", matchId, messageRequestDto);
+        if (authentication != null) {
+            log.info("Message sent by authenticated user: {}", authentication.getName());
+        } else {
+            log.warn("Message received without authentication");
+            // Make sure the message contains a valid senderId
+            if (messageRequestDto.writtenBy() == null) {
+                log.error("Message rejected: No sender ID provided");
+                return;
+            }
+        }
+
         MessageResponseDto messageResponseDto = chatService.processIncomingMessage(Long.parseLong(matchId), messageRequestDto);
 
-        messagingTemplate.convertAndSend("/topic/messages/" + matchId, messageRequestDto);
+        // Send the message to all subscribers
+        messagingTemplate.convertAndSend("/topic/messages/" + matchId, messageResponseDto);
 
         log.info("Received and saved message to match {}: {}", matchId, messageResponseDto);
     }

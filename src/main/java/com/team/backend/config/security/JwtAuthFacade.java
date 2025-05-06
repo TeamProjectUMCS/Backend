@@ -1,7 +1,11 @@
 package com.team.backend.config.security;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.auth0.jwt.interfaces.Claim;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.team.backend.config.security.dto.JwtResponseDto;
 import com.team.backend.config.security.dto.TokenRequestDto;
 import com.team.backend.repository.UserRepository;
@@ -14,6 +18,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 import java.time.*;
+import java.util.Map;
+import java.util.function.Function;
 
 @Log4j2
 @Component
@@ -52,6 +58,22 @@ public class JwtAuthFacade {
                 .withExpiresAt(expireAt)
                 .withIssuer(issuer)
                 .sign(algorithm);
+    }
+
+    public String getUsername(String token) {
+        return getClaim(token, claims -> claims.get("sub").asString());
+    }
+    public <T> T getClaim(String token, Function<Map<String, Claim>, T> claimsResolver) {
+        Map<String, Claim> claims = getAllClaims(token);
+        return claimsResolver.apply(claims);
+    }
+    public Map<String, Claim> getAllClaims(String token) {
+        return decodeJWT(token).getClaims();
+    }
+    public DecodedJWT decodeJWT(String token) throws TokenExpiredException {
+        Algorithm algorithm = Algorithm.HMAC256(properties.secret());
+        JWTVerifier verifier = JWT.require(algorithm).build();
+        return verifier.verify(token);
     }
 
 }
