@@ -8,11 +8,11 @@ import java.util.List;
 
 @Entity
 @Table(name = "matches")
+@Getter
 public class Match {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
     @Setter
     private Long id;
 

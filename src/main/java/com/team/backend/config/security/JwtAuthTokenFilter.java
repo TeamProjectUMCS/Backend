@@ -30,7 +30,7 @@ class JwtAuthTokenFilter extends OncePerRequestFilter {
 
         String authorization = request.getHeader("Authorization");
         log.debug(authorization);
-        if (authorization == null) {
+        if (authorization == null || !authorization.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }

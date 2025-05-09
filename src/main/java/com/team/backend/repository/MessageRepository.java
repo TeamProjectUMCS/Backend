@@ -13,4 +13,6 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
     void deleteById(Long id);
 
     List<Message> findByMatchId(Long matchId);
+
+    List<Message> findByMatchIdOrderByTimestampDesc(Long matchId);
 }
