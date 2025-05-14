@@ -1,14 +1,18 @@
 package com.team.backend.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "matches")
 @Getter
+@NoArgsConstructor
 public class Match {
 
     @Id
@@ -28,6 +32,10 @@ public class Match {
     @OneToMany(mappedBy = "match", fetch = FetchType.EAGER)
     private List<Message> messages;
 
-
+    public Match(User firstUser, User secondUser) {
+        this.firstUser = firstUser;
+        this.secondUser = secondUser;
+        this.messages = new ArrayList<>();
+    }
 
 }
