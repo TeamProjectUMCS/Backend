@@ -42,8 +42,10 @@ public class PendingPairService {
     }
 
     public PendingPair getOrCreatePendingPair(User firstUser, User secondUser) {
-        return pendingPairRepository.findByUsers(firstUser, secondUser).orElse(createPendingPair(firstUser, secondUser));
+        return pendingPairRepository.findByUsers(firstUser, secondUser)
+                .orElseGet(() -> createPendingPair(firstUser, secondUser));
     }
+
 
     public PendingPair createPendingPair(User firstUser, User secondUser) {
         PairStatus firstUserStatus = new PairStatus(firstUser, LikedStatus.PENDING);

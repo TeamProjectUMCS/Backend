@@ -2,7 +2,7 @@ package com.team.backend.controller;
 
 import com.team.backend.model.Match;
 import com.team.backend.model.User;
-import com.team.backend.model.dto.UserDto;
+import com.team.backend.model.dto.UserMatchDto;
 import com.team.backend.model.mapper.UserMapper;
 import com.team.backend.service.MatchService;
 import com.team.backend.service.UserService;
@@ -22,18 +22,17 @@ public class MatchController {
     private final MatchService matchService;
     private final UserService userService;
 
-    @GetMapping("/potential")
-    public ResponseEntity<List<UserDto>> getPotentialMatches(Authentication authentication) {
-        String username = authentication.getName();
-        // TODO: ZROBIC JAKEIS MATCHOWANIE
-        List<User> potentialMatches = matchService.getPotentialMatches(username);
-
-        List<UserDto> result = potentialMatches.stream()
-                .map(UserMapper::mapToUserDto)
-                .toList();
-
-        return ResponseEntity.ok(result);
-    }
+//    @GetMapping("/potential")
+//    public ResponseEntity<List<UserMatchDto>> getPotentialMatches(Authentication authentication) {
+//        String username = authentication.getName();
+//        List<User> potentialMatches = matchService.getPotentialMatches(username);
+//
+//        List<UserMatchDto> result = potentialMatches.stream()
+//                .map(UserMapper::mapToUserMatchDto)
+//                .toList();
+//
+//        return ResponseEntity.ok(result);
+//    }
 
     @PostMapping("/like/{likedUserId}")
     public ResponseEntity<?> likeUser(@PathVariable Long likedUserId, Authentication authentication) {

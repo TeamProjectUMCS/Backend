@@ -14,7 +14,7 @@ import java.util.Optional;
 public interface PendingPairRepository extends JpaRepository<PendingPair, Long> {
 
     @Transactional
-    public PendingPair save(PendingPair pendingPair);
+    PendingPair save(PendingPair pendingPair);
 
     @Transactional
     void deleteByFirstUserStatusIdAndSecondUserStatusId(Long firstUserStatusId, Long secondUserStatusId);

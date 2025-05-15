@@ -5,7 +5,7 @@ import com.team.backend.model.Enum.Sex;
 
 import java.util.List;
 
-public record UserDto(
+public record UserMatchDto(
         Long id,
         String username,
         Sex sex,

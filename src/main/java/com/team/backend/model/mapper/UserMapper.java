@@ -22,8 +22,8 @@ public class UserMapper {
         return new LoginResponseDto(user.getUsername(), user.getLogin(), user.getPassword());
     }
 
-    public static UserDto mapToUserDto(User user) {
-        return new UserDto(
+    public static UserMatchDto mapToUserMatchDto(User user) {
+        return new UserMatchDto(
                 user.getId(),
                 user.getUsername(),
                 user.getSex(),
