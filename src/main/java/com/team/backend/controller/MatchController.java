@@ -22,17 +22,17 @@ public class MatchController {
     private final MatchService matchService;
     private final UserService userService;
 
-//    @GetMapping("/potential")
-//    public ResponseEntity<List<UserMatchDto>> getPotentialMatches(Authentication authentication) {
-//        String username = authentication.getName();
-//        List<User> potentialMatches = matchService.getPotentialMatches(username);
-//
-//        List<UserMatchDto> result = potentialMatches.stream()
-//                .map(UserMapper::mapToUserMatchDto)
-//                .toList();
-//
-//        return ResponseEntity.ok(result);
-//    }
+    @GetMapping("/potential")
+    public ResponseEntity<List<UserMatchDto>> getPotentialMatches(Authentication authentication) {
+        User currentUser = userService.getCurrentUser(authentication);
+        List<User> potentialMatches = matchService.getPotentialMatches(currentUser);
+
+        List<UserMatchDto> result = potentialMatches.stream()
+                .map(UserMapper::mapToUserMatchDto)
+                .toList();
+
+        return ResponseEntity.ok(result);
+    }
 
     @PostMapping("/like/{likedUserId}")
     public ResponseEntity<?> likeUser(@PathVariable Long likedUserId, Authentication authentication) {

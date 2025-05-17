@@ -13,6 +13,7 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -72,4 +73,7 @@ public class MatchService {
         return false;
     }
 
+    public List<User> getPotentialMatches(User user) {
+        return new ArrayList<>();
+    }
 }

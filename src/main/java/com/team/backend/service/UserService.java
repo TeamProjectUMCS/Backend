@@ -39,6 +39,13 @@ public class UserService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
     }
 
+    public User getCurrentUser(Authentication authentication) {
+        String username = authentication.getName();
+
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+    }
+
     public UserDetails loadUserByLogin(String username) {
         return userRepository.findByLogin(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
