@@ -18,13 +18,12 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public Optional<User> findById(Long userId) {
-        return userRepository.findById(userId);
-    }
-
-    @Transactional
     public Optional<User> getUserById(Long id) {
         return userRepository.findById(id);
+    }
+
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
     }
 
     @Transactional
@@ -34,6 +33,13 @@ public class UserService {
 
     public User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+    }
+
+    public User getCurrentUser(Authentication authentication) {
         String username = authentication.getName();
 
         return userRepository.findByUsername(username)

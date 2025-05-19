@@ -1,8 +1,11 @@
 package com.team.backend.service;
 
+import com.team.backend.model.Enum.LikedStatus;
 import com.team.backend.model.Enum.Preference;
 import com.team.backend.model.Enum.Sex;
 import com.team.backend.model.Hobby;
+import com.team.backend.model.Match;
+import com.team.backend.model.PendingPair;
 import com.team.backend.model.User;
 import com.team.backend.repository.MatchRepository;
 import com.team.backend.repository.PendingPairRepository;
@@ -15,10 +18,14 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -27,11 +34,15 @@ class MatchServiceTest {
     @Mock private MatchRepository matchRepository;
     @Mock private UserRepository userRepository;
     @Mock private PendingPairRepository pendingPairRepository;
+    @Mock private PendingPairService pendingPairService;
 
     @InjectMocks private MatchService matchService;
 
     private User user;
     private User candidate1, candidate2;
+    private User likingUser;
+    private User likedUser;
+    private PendingPair pendingPair;
 
     @BeforeEach
     void setup() {
@@ -41,6 +52,13 @@ class MatchServiceTest {
         user.setAge_min(20);
         user.setAge_max(30);
         user.setLocalization("Lublin");
+
+        likingUser = User.of("liker", "likerLogin", "pass", Sex.MALE, Preference.WOMEN);
+        likingUser.setId(1L);
+        likedUser = User.of("liked", "likedLogin", "pass", Sex.FEMALE, Preference.MEN);
+        likedUser.setId(2L);
+
+        pendingPair = new PendingPair();
 
         Hobby hobby = new Hobby();
         hobby.setId(1L);
@@ -61,6 +79,15 @@ class MatchServiceTest {
     }
 
     @Test
+    void handleLike_shouldThrow_whenLikingUserNotFound() {
+        when(userRepository.findByUsername("unknown")).thenReturn(Optional.empty());
+
+        assertThrows(RuntimeException.class, () -> {
+            matchService.handleLike("unknown", 2L);
+        });
+    }
+
+    @Test
     void shouldReturnOnlyCompatiblePotentialMatches() {
         List<User> filteredUsers = List.of(candidate1, candidate2);
         when(userRepository.findFilteredByAgeAndLocation(user.getId(), user.getAge_min(), user.getAge_max(), user.getLocalization()))
@@ -77,4 +104,37 @@ class MatchServiceTest {
         assertTrue(potentialMatches.contains(candidate1));
         assertFalse(potentialMatches.contains(candidate2)); // brak wspolnych hobby
     }
+
+    @Test
+    void handleLike_shouldCreateMatchAndDeletePendingPair_whenBothLiked() {
+        when(userRepository.findByUsername("liker")).thenReturn(Optional.of(likingUser));
+        when(userRepository.findById(2L)).thenReturn(Optional.of(likedUser));
+        when(pendingPairService.getOrCreatePendingPair(likingUser, likedUser)).thenReturn(pendingPair);
+
+        when(pendingPairService.bothUsersLiked(pendingPair)).thenReturn(true);
+
+        boolean result = matchService.handleLike("liker", 2L);
+
+        assertTrue(result);
+        verify(pendingPairService).updatePairStatus(pendingPair, likingUser, LikedStatus.LIKED);
+        verify(matchRepository).save(any(Match.class));
+        verify(pendingPairService).deletePendingPair(pendingPair);
+    }
+
+    @Test
+    void handleLike_shouldNotCreateMatch_whenOnlyOneSideLiked() {
+        when(userRepository.findByUsername("liker")).thenReturn(Optional.of(likingUser));
+        when(userRepository.findById(2L)).thenReturn(Optional.of(likedUser));
+        when(pendingPairService.getOrCreatePendingPair(likingUser, likedUser)).thenReturn(pendingPair);
+
+        when(pendingPairService.bothUsersLiked(pendingPair)).thenReturn(false);
+
+        boolean result = matchService.handleLike("liker", 2L);
+
+        assertFalse(result);
+        verify(pendingPairService).updatePairStatus(pendingPair, likingUser, LikedStatus.LIKED);
+        verify(matchRepository, never()).save(any());
+        verify(pendingPairService, never()).deletePendingPair(any());
+    }
 }
+
