@@ -18,6 +18,7 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -84,12 +85,19 @@ public class MatchService {
                 .map(pp -> pp.getSecondUserStatus().getUser().getId())
                 .collect(Collectors.toSet());
 
-        return filtered.stream()
+        List<User> filteredUsers = filtered.stream()
                 .filter(candidate -> !matchedUserIds.contains(candidate.getId()))
                 .filter(candidate -> !likedUserIds.contains(candidate.getId()))
                 .filter(candidate -> areBothCompatible(user, candidate))
                 .filter(candidate -> hasCommonHobbies(user, candidate))
                 .collect(Collectors.toList());
+
+        if (filteredUsers.size() <= 30) {
+            return filteredUsers;
+        }
+
+        Collections.shuffle(filteredUsers);
+        return filteredUsers.subList(0, 30);
     }
 
     public boolean handleLike(String username, Long likedUserId) {
@@ -123,9 +131,11 @@ public class MatchService {
         return switch (pref) {
             case MEN -> sex == Sex.MALE;
             case WOMEN -> sex == Sex.FEMALE;
-            case BOTH -> sex == Sex.MALE || sex == Sex.FEMALE;
+            case OTHER -> sex == Sex.OTHER;
+            case BOTH -> sex == Sex.MALE || sex == Sex.FEMALE || sex == Sex.OTHER;
         };
     }
+
 
     private boolean hasCommonHobbies(User user1, User user2) {
         Set<Long> hobbyIds1 = user1.getHobbies().stream().map(Hobby::getId).collect(Collectors.toSet());

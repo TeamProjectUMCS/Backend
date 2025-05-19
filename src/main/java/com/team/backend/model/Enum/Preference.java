@@ -11,7 +11,9 @@ public enum Preference {
     @JsonProperty("Women")
     WOMEN("Women"),
     @JsonProperty("Both")
-    BOTH("Both");
+    BOTH("Both"),
+    @JsonProperty("Other")
+    OTHER("Other");
 
     private final String displayName;
 
