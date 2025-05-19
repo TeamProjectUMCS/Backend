@@ -16,7 +16,11 @@ public class MessageService {
 
 
     public List<Message> findByMatchId(Long matchId) {
-        return messageRepository.findByMatchId(matchId);
+        return messageRepository.findByMatchIdOrderByTimestampDesc(matchId);
+    }
+
+    public Message getLastMessageFromMatch(Long matchId) {
+        return messageRepository.findFirstByMatchIdOrderByTimestampDesc(matchId).orElse(null);
     }
 
     @Transactional

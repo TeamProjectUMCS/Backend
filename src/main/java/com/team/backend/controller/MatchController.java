@@ -2,7 +2,9 @@ package com.team.backend.controller;
 
 import com.team.backend.model.Match;
 import com.team.backend.model.User;
+import com.team.backend.model.dto.MatchDto;
 import com.team.backend.model.dto.UserMatchDto;
+import com.team.backend.model.mapper.MatchMapper;
 import com.team.backend.model.mapper.UserMapper;
 import com.team.backend.service.MatchService;
 import com.team.backend.service.UserService;
@@ -13,6 +15,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static com.team.backend.model.mapper.MatchMapper.mapToMatchDto;
 
 @RestController
 @Log4j2
@@ -25,9 +29,9 @@ public class MatchController {
     @GetMapping("/potential")
     public ResponseEntity<List<UserMatchDto>> getPotentialMatches(Authentication authentication) {
         User currentUser = userService.getCurrentUser(authentication);
-        List<User> potentialMatches = matchService.getPotentialMatches(currentUser);
 
-        List<UserMatchDto> result = potentialMatches.stream()
+        List<UserMatchDto> result = matchService.getPotentialMatches(currentUser)
+                .stream()
                 .map(UserMapper::mapToUserMatchDto)
                 .toList();
 
@@ -48,11 +52,16 @@ public class MatchController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Match>> getUserMatches(Authentication authentication) {
+    public ResponseEntity<List<MatchDto>> getUserMatches(Authentication authentication) {
         String username = authentication.getName();
         User currentUser = userService.getUserByUsername(username);
 
-        List<Match> matches = matchService.getUserMatches(currentUser);
-        return ResponseEntity.ok(matches);
+
+        List<MatchDto> result = matchService.getUserMatches(currentUser)
+                .stream()
+                .map(match -> mapToMatchDto(match, currentUser))
+                .toList();
+
+        return ResponseEntity.ok(result);
     }
 }
