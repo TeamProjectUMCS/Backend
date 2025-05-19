@@ -3,8 +3,11 @@ package com.team.backend.repository;
 import com.team.backend.model.User;
 import lombok.NonNull;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -20,4 +23,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User save(User user);
 
     void deleteById(Long id);
+
+    @Query("SELECT u FROM User u " +
+            "WHERE u.id <> :currentUserId " +
+            "AND u.age BETWEEN :ageMin AND :ageMax " +
+            "AND u.localization = :localization")
+    List<User> findFilteredByAgeAndLocation(@Param("currentUserId") Long currentUserId,
+                                            @Param("ageMin") int ageMin,
+                                            @Param("ageMax") int ageMax,
+                                            @Param("localization") String localization);
+
 }
