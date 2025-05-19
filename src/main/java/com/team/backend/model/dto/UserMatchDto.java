@@ -12,5 +12,6 @@ public record UserMatchDto(
         int age,
         String localization,
         Preference preference,
-        List<String> hobbies
+        List<String> hobbies,
+        String description
 ) {}

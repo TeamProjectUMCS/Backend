@@ -32,7 +32,8 @@ public class UserMapper {
                 user.getPreference(),
                 user.getHobbies().stream()
                                 .map(Hobby::getHobbyName)
-                                .toList()
+                                .toList(),
+                user.getDescription()
         );
     }
 }

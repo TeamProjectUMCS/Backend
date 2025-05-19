@@ -62,7 +62,7 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<PairStatus> pairStatuses;
 
-
+    private String description = "";
 
     private int age;
     private String localization;
