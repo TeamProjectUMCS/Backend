@@ -7,6 +7,7 @@ import java.util.List;
 public record UserProfileUpdateDto(
 
         @NotBlank
+        @Size(min = 3, max = 30)
         String username,
 
         @NotBlank
