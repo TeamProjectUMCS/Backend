@@ -36,4 +36,19 @@ public class UserMapper {
                 user.getDescription()
         );
     }
+
+    public static UserProfileDto mapToUserProfileDto(User user) {
+        return new UserProfileDto(
+                user.getUsername(),
+                user.getLogin(),
+                user.getSex().getDisplayName(),
+                user.getPreference().getDisplayName(),
+                user.getHobbies().stream().map(h -> h.getHobbyName()).toList(),
+                user.getDescription(),
+                user.getLocalization(),
+                user.getAge(),
+                user.getAge_min(),
+                user.getAge_max()
+        );
+    }
 }

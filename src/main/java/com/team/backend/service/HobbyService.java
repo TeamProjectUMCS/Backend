@@ -3,8 +3,11 @@ package com.team.backend.service;
 import com.team.backend.model.Hobby;
 import com.team.backend.repository.HobbyRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Limit;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,5 +34,19 @@ public class HobbyService {
 
     public Hobby updateHobby(Hobby hobby) {
         return hobbyRepository.save(hobby);
+    }
+
+    public List<Hobby> getHobbiesByIdList(List<Long> idList) {
+        List<Hobby> result = new ArrayList<>();
+
+        for (Long id : idList) {
+            hobbyRepository.findById(id).ifPresent(result::add);
+        }
+
+        return result;
+    }
+
+    public List<Hobby> searchHobbiesByKeyword(String keyword, int limit) {
+        return hobbyRepository.findByHobbyNameContainingIgnoreCase(keyword, Limit.of(limit));
     }
 }

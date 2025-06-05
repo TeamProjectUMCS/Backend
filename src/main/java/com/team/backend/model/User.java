@@ -14,7 +14,8 @@ import java.util.List;
 @Setter
 @Entity
 @NoArgsConstructor
-@RequiredArgsConstructor(staticName = "of") // wszystkie non null pola moga byc wziete do konstruktora UWAGA NOn NULL musi byc z lomboka a nie z jakarty
+@RequiredArgsConstructor(staticName = "of")
+// wszystkie non null pola moga byc wziete do konstruktora UWAGA NOn NULL musi byc z lomboka a nie z jakarty
 @Table(name = "users")
 public class User implements UserDetails {
     @Id
@@ -68,8 +69,7 @@ public class User implements UserDetails {
     private String localization;
     private int age_min;
     private int age_max;
-    private int distancePreference;
-
+//    private int distancePreference;
 
 
     @Override
