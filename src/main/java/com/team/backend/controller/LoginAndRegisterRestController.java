@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Log4j2
 @AllArgsConstructor
-public class LoginAndRegisterRestController {
+public class LoginAndRegisterRestController
+{
 
     private final LoginAndRegisterService loginAndRegisterService;
     private final LoginAndRegisterMapper mapper;
@@ -37,7 +38,6 @@ public class LoginAndRegisterRestController {
     public ResponseEntity<LoginResponseDto> findUser(@PathVariable String login) {
         final LoginResponseDto byUsername = loginAndRegisterService.findByLogin(login);
         log.info("User found: {}", byUsername);
-
         return ResponseEntity.ok(byUsername);
     }
 
@@ -45,7 +45,6 @@ public class LoginAndRegisterRestController {
     @DeleteMapping("/delete/{login}")
     public ResponseEntity<LoginResponseDto> deleteUser(@PathVariable String login) {
         log.info("Deleting user: {}", login);
-
         return ResponseEntity.ok(loginAndRegisterService.deleteUser(login));
     }
 }
