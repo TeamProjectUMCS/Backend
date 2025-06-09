@@ -30,7 +30,8 @@ public class JwtAuthFacade {
     private final JwtConfigProperties properties;
     private final UserRepository userRepository;
 
-    public JwtResponseDto authenticateAndGenerateToken(TokenRequestDto tokenRequestDto){
+    public JwtResponseDto authenticateAndGenerateToken(TokenRequestDto tokenRequestDto)
+    {
         Authentication authenticate = authenticatorManager.authenticate(
                 new UsernamePasswordAuthenticationToken(tokenRequestDto.login(), tokenRequestDto.password())
         );

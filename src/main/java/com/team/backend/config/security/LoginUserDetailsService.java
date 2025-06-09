@@ -10,18 +10,19 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.util.Collections;
 
 @AllArgsConstructor
-public class LoginUserDetailsService implements UserDetailsService {
-
+public class LoginUserDetailsService implements UserDetailsService
+{
     private final LoginAndRegisterService loginAndRegisterService;
 
     @Override
-    public UserDetails loadUserByUsername(final String login) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(final String login) throws UsernameNotFoundException
+    {
         final LoginResponseDto byUsername = loginAndRegisterService.findByLogin(login);
-
         return getUser(byUsername);
     }
 
-    private org.springframework.security.core.userdetails.User getUser(LoginResponseDto dto) {
+    private org.springframework.security.core.userdetails.User getUser(LoginResponseDto dto)
+    {
         return new org.springframework.security.core.userdetails.User(
                 dto.login(),
                 dto.password(),

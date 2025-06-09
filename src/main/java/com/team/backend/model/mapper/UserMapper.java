@@ -10,7 +10,8 @@ import org.springframework.stereotype.Service;
 public class UserMapper {
 
     public User mapToUser(RegisterRequest userRequest) {
-        return User.of(userRequest.username(), userRequest.login(), userRequest.password(), userRequest.sex(), userRequest.preference());
+        return User.of(userRequest.username(), userRequest.login(), userRequest.password(), userRequest.sex(), userRequest.preference(),
+                userRequest.description(),userRequest.age(),userRequest.age_min(),userRequest.age_max());
     }
 
     public RegisterResponseDto mapToRegisterResponse(User user) {
@@ -28,7 +29,7 @@ public class UserMapper {
                 user.getUsername(),
                 user.getSex(),
                 user.getAge(),
-                user.getLocalization(),
+//                user.getLocalization(),
                 user.getPreference(),
                 user.getHobbies().stream()
                                 .map(Hobby::getHobbyName)
@@ -45,7 +46,7 @@ public class UserMapper {
                 user.getPreference().getDisplayName(),
                 user.getHobbies().stream().map(h -> h.getHobbyName()).toList(),
                 user.getDescription(),
-                user.getLocalization(),
+//                user.getLocalization(),
                 user.getAge(),
                 user.getAge_min(),
                 user.getAge_max()

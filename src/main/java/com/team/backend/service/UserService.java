@@ -72,8 +72,7 @@ public class UserService {
         user.setHobbies(hobbies);
 
         user.setDescription(updateDto.description());
-        user.setLocalization(updateDto.localization());
-        user.setAge(updateDto.age());
+//        user.setLocalization(updateDto.localization());
         user.setAge_min(updateDto.ageMin());
         user.setAge_max(updateDto.ageMax());
 

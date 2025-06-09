@@ -20,7 +20,8 @@ class TokenRestController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<JwtResponseDto> fetchToken(@RequestBody @Valid TokenRequestDto dto) {
+    public ResponseEntity<JwtResponseDto> fetchToken(@RequestBody @Valid TokenRequestDto dto)
+    {
         final JwtResponseDto body = jwtAuthFacade.authenticateAndGenerateToken(dto);
         log.info("Token generated: {}", body);
 
