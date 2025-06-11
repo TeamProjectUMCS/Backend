@@ -11,7 +11,7 @@ public class UserMapper {
 
     public User mapToUser(RegisterRequest userRequest) {
         return User.of(userRequest.username(), userRequest.login(), userRequest.password(), userRequest.sex(), userRequest.preference(),
-                userRequest.description(),userRequest.age(),userRequest.age_min(),userRequest.age_max(), userRequest.localization());
+                userRequest.description(),userRequest.age(),userRequest.age_min(),userRequest.age_max(), userRequest.localization(), userRequest.hobbies());
     }
 
     public RegisterResponseDto mapToRegisterResponse(User user) {

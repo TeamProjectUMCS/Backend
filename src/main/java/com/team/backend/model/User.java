@@ -58,10 +58,8 @@ public class User implements UserDetails {
     private String localization;
 
 
-
-
-
-    @ManyToMany(fetch = FetchType.EAGER)
+    @NonNull
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "user_hobbies",
             joinColumns = @JoinColumn(name = "user_id"),

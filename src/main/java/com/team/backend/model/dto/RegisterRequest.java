@@ -2,7 +2,10 @@ package com.team.backend.model.dto;
 
 import com.team.backend.model.Enum.Preference;
 import com.team.backend.model.Enum.Sex;
+import com.team.backend.model.Hobby;
 import jakarta.validation.constraints.*;
+
+import java.util.List;
 
 public record RegisterRequest(
 
@@ -48,6 +51,9 @@ public record RegisterRequest(
         @NotNull(message = "{localization.not.null}")
         @NotEmpty(message = "{localization.not.empty}")
         @NotBlank(message = "{localization.not.blank}")
-        String localization
+        String localization,
+
+        @NotNull(message = "{hobby_list.not.null}")
+        List<Hobby> hobbies
 ) {
 }

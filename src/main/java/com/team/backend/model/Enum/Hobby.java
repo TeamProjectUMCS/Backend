@@ -80,7 +80,12 @@ public enum Hobby {
     @JsonCreator
     public static Hobby fromDisplayName(String value) {
         if (value == null) return null;
-        return DISPLAY_NAME_MAP.get(value.toLowerCase());
+
+        Hobby hobby = DISPLAY_NAME_MAP.get(value.toLowerCase());
+        if (hobby == null) {
+            throw new IllegalArgumentException("nieznane hobby: " + value);
+        }
+        return hobby;
     }
 
 
