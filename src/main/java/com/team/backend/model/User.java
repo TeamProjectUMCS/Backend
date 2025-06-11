@@ -42,8 +42,22 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Column(name = "preference", nullable = false)
     private Preference preference;
-    //@NotNull
-    //private String email;
+
+    @NonNull
+    private String description;
+
+    @NonNull
+    private Integer age;
+
+    @NonNull
+    private Integer age_min;
+
+    @NonNull
+    private Integer age_max;
+
+
+
+
 
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -58,18 +72,10 @@ public class User implements UserDetails {
     private List<Match> matchesAsFirstUser;
 
     @OneToMany(mappedBy = "secondUser")
-    private List<Match> matchesAsSecondUser;    //tu robocik tak powiedzial ze bedzie dobrze bo inaczej to sraka ponoć
+    private List<Match> matchesAsSecondUser;
 
     @OneToMany(mappedBy = "user")
     private List<PairStatus> pairStatuses;
-
-    private String description = "";
-
-    private int age;
-    private String localization;
-    private int age_min;
-    private int age_max;
-//    private int distancePreference;
 
 
     @Override
