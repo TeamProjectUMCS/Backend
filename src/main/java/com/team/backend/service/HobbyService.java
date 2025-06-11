@@ -19,10 +19,11 @@ public class HobbyService {
     public Hobby createHobby(Hobby hobby) {
         return hobbyRepository.save(hobby);
     }
+//
+//    public Optional<Hobby> findHobbyByName(com.team.backend.model.Enum.Hobby hobbyName) {
+//        return hobbyRepository.findByName(hobbyName);
+//    }
 
-    public Optional<Hobby> findHobbyByName(String hobbyName) {
-        return hobbyRepository.findByHobbyName(hobbyName);
-    }
 
     public Optional<Hobby> findHobbyById(Long id) {
         return hobbyRepository.findById(id);
@@ -45,8 +46,8 @@ public class HobbyService {
 
         return result;
     }
-
-    public List<Hobby> searchHobbiesByKeyword(String keyword, int limit) {
-        return hobbyRepository.findByHobbyNameContainingIgnoreCase(keyword, Limit.of(limit));
-    }
+//
+//    public List<Hobby> searchHobbiesByKeyword(String keyword, int limit) {
+//        return hobbyRepository.findByHobbyNameContainingIgnoreCase(keyword, Limit.of(limit));
+//    }
 }

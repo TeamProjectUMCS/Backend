@@ -31,14 +31,18 @@ class MatchRepositoryTest {
 
     @BeforeEach
     void setup() {
-        user1 = User.of("user1", "login1", "pass", Sex.MALE, Preference.WOMEN);
-        user2 = User.of("user2", "login2", "pass", Sex.FEMALE, Preference.MEN);
-        user3 = User.of("user3", "login3", "pass", Sex.FEMALE, Preference.WOMEN);
+        user1 = User.of("user1", "login1", "pass", Sex.MALE, Preference.WOMEN,
+                "Hello, I'm user1", 25, 20, 30);
+        user2 = User.of("user2", "login2", "pass", Sex.FEMALE, Preference.MEN,
+                "Hello, I'm user2", 23, 22, 35);
+        user3 = User.of("user3", "login3", "pass", Sex.FEMALE, Preference.WOMEN,
+                "Hello, I'm user3", 27, 25, 40);
 
         entityManager.persist(user1);
         entityManager.persist(user2);
         entityManager.persist(user3);
     }
+
 
     @Test
     void shouldFindAllMatchesForUser() {

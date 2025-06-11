@@ -12,7 +12,9 @@ import java.util.Optional;
 
 @Repository
 public interface HobbyRepository extends JpaRepository<Hobby, Long> {
-    Optional<Hobby> findByHobbyName(String hobbyName);
+    //Optional<Hobby> findByHobbyName(String hobbyName2);
 
-    List<Hobby> findByHobbyNameContainingIgnoreCase(String hobbyName, Limit limit);
+    //Optional<Hobby> findByName(com.team.backend.model.Enum.Hobby hobbyName);
+
+    //List<Hobby> findByHobbyNameContainingIgnoreCase(String hobbyName, Limit limit);
 }
