@@ -60,7 +60,7 @@ public class UserProfileController {
         return ResponseEntity.ok("Profile updated");
     }
 
-    @PostMapping("change-password")
+    @PostMapping("/change-password")
     public ResponseEntity<?> changePassword(@RequestBody @Valid PasswordChangeRequest request, Authentication authentication) {
         String username = authentication.getName();
 

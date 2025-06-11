@@ -4,15 +4,14 @@ package com.team.backend.model.Enum;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 @Getter
 public enum Preference {
-    @JsonProperty("Men")
     MEN("Men"),
-    @JsonProperty("Women")
     WOMEN("Women"),
-    @JsonProperty("Both")
     BOTH("Both"),
-    @JsonProperty("Other")
     OTHER("Other");
 
     private final String displayName;
@@ -21,4 +20,21 @@ public enum Preference {
         this.displayName = displayName;
     }
 
+    @JsonValue
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    @JsonCreator
+    public static Preference fromString(String value) {
+        for (Preference p : Preference.values()) {
+            if (p.displayName.equalsIgnoreCase(value)) {
+                return p;
+            }
+        }
+        throw new IllegalArgumentException("Unknown preference: " + value);
+    }
 }
+
+
+
