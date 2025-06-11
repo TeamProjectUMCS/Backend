@@ -13,8 +13,8 @@ import java.util.List;
 public class HobbyController {
     private HobbyService hobbyService;
 
-    @GetMapping("/search")
-    public List<Hobby> searchHobby(@RequestParam String query) {
-        return hobbyService.searchHobbiesByKeyword(query, 5);
-    }
+//    @GetMapping("/search")
+//    public List<Hobby> searchHobby(@RequestParam String query) {
+//        return hobbyService.searchHobbiesByKeyword(query, 5);
+//    }
 }
