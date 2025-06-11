@@ -55,7 +55,8 @@ class LoginAndRegisterRestControllerTest {
     @WithMockUser
     void shouldRegisterUserSuccessfully() throws Exception {
         // Given
-        RegisterRequest registerRequest = new RegisterRequest("testUser", "testLogin", "password123", Sex.MALE, Preference.BOTH);
+        RegisterRequest registerRequest = new RegisterRequest("testUser", "testLogin", "password123", Sex.MALE, Preference.BOTH, "I am a test user", 25,
+                20, 30);
         LoginRequest loginRequest = new LoginRequest("testUser", "testLogin", "encodedPassword123");
         LoginResponseDto loginResponseDto = new LoginResponseDto("testUser", "testLogin", "testPassword");
         RegisterResponseDto expectedResponse = new RegisterResponseDto("testUser", "testLogin", "REGISTERED");
@@ -65,7 +66,6 @@ class LoginAndRegisterRestControllerTest {
         when(loginAndRegisterService.register(registerRequest)).thenReturn(expectedResponse);
         when(mapper.fromRegisterRequestDto(registerRequest)).thenReturn(loginRequest);
         when(passwordEncoderService.encodePassword(any())).thenReturn("encodedPassword123");
-
 
 
         // Then

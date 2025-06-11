@@ -39,11 +39,14 @@ class PendingPairServiceTest {
 
     @BeforeEach
     void setup() {
-        user1 = User.of("username1", "login1", "password1", Sex.MALE, Preference.WOMEN);
+        user1 = User.of("username1", "login1", "password1", Sex.MALE, Preference.WOMEN,
+                "Description for user1", 25, 20, 30);
         user1.setId(1L);
 
-        user2 = User.of("username2", "login2", "password2", Sex.FEMALE, Preference.MEN);
+        user2 = User.of("username2", "login2", "password2", Sex.FEMALE, Preference.MEN,
+                "Description for user2", 23, 22, 35);
         user2.setId(2L);
+
     }
 
     @Test

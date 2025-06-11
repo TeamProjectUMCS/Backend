@@ -46,16 +46,17 @@ class MatchServiceTest {
 
     @BeforeEach
     void setup() {
-        user = User.of("user", "login", "pass", Sex.MALE, Preference.WOMEN);
+        user = User.of("user", "login", "pass", Sex.MALE, Preference.WOMEN,
+                "Description for user", 25, 20, 30);
         user.setId(1L);
-        user.setAge(25);
-        user.setAge_min(20);
-        user.setAge_max(30);
         user.setLocalization("Lublin");
 
-        likingUser = User.of("liker", "likerLogin", "pass", Sex.MALE, Preference.WOMEN);
+        likingUser = User.of("liker", "likerLogin", "pass", Sex.MALE, Preference.WOMEN,
+                "Description for liker", 28, 22, 35);
         likingUser.setId(1L);
-        likedUser = User.of("liked", "likedLogin", "pass", Sex.FEMALE, Preference.MEN);
+
+        likedUser = User.of("liked", "likedLogin", "pass", Sex.FEMALE, Preference.MEN,
+                "Description for liked", 24, 20, 30);
         likedUser.setId(2L);
 
         pendingPair = new PendingPair();
@@ -64,19 +65,19 @@ class MatchServiceTest {
         hobby.setId(1L);
         user.setHobbies(List.of(hobby));
 
-        candidate1 = User.of("c1", "c1login", "pass", Sex.FEMALE, Preference.MEN);
+        candidate1 = User.of("c1", "c1login", "pass", Sex.FEMALE, Preference.MEN,
+                "Description for c1", 26, 22, 32);
         candidate1.setId(2L);
-        candidate1.setAge(26);
         candidate1.setLocalization("Lublin");
         candidate1.setHobbies(List.of(hobby));
 
-        //inne hobby
-        candidate2 = User.of("c2", "c2login", "pass", Sex.FEMALE, Preference.MEN);
+        candidate2 = User.of("c2", "c2login", "pass", Sex.FEMALE, Preference.MEN,
+                "Description for c2", 27, 21, 33);
         candidate2.setId(3L);
-        candidate2.setAge(27);
         candidate2.setLocalization("Lublin");
         candidate2.setHobbies(List.of());
     }
+
 
     @Test
     void handleLike_shouldThrow_whenLikingUserNotFound() {

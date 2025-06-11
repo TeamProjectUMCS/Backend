@@ -69,10 +69,10 @@ class UserServiceTest {
     void updateUser_shouldUpdateAllFields() {
         UserProfileUpdateDto dto = new UserProfileUpdateDto(
                 "newUsername", "BOTH", List.of(1L),
-                "desc", "loc", 25, 20, 30);
+                "desc", "loc", 20, 30);
 
         Hobby hobby = new Hobby();
-        hobby.setHobbyName("Swimming");
+        hobby.setName(com.team.backend.model.Enum.Hobby.SWIMMING);
         hobby.setId(1L);
         List<Hobby> hobbies = List.of(hobby);
 
@@ -86,7 +86,7 @@ class UserServiceTest {
         assertEquals(hobbies, updatedUser.getHobbies());
         assertEquals("desc", updatedUser.getDescription());
         assertEquals("loc", updatedUser.getLocalization());
-        assertEquals(25, updatedUser.getAge());
+//        assertEquals(25, updatedUser.getAge());
         assertEquals(20, updatedUser.getAge_min());
         assertEquals(30, updatedUser.getAge_max());
     }
