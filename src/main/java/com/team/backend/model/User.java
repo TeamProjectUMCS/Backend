@@ -54,7 +54,8 @@ public class User implements UserDetails {
 
     @NonNull
     private Integer age_max;
-
+    @NonNull
+    private String localization;
 
 
 

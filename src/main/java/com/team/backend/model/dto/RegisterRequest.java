@@ -43,6 +43,11 @@ public record RegisterRequest(
         @NotNull(message = "{age.not.null}")
         @Min(18)
         @Max(100)
-        Integer age_max
+        Integer age_max,
+
+        @NotNull(message = "{localization.not.null}")
+        @NotEmpty(message = "{localization.not.empty}")
+        @NotBlank(message = "{localization.not.blank}")
+        String localization
 ) {
 }

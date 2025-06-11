@@ -67,8 +67,8 @@ public class MatchService {
         List<User> filtered = userRepository.findFilteredByAgeAndLocation(
                 user.getId(),
                 user.getAge_min(),
-                user.getAge_max()
-//                user.getLocalization()
+                user.getAge_max(),
+               user.getLocalization()
         );
 
         Set<Long> matchedUserIds = matchRepository.findAllMatchesForUser(user).stream()
