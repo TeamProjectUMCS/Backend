@@ -27,6 +27,7 @@ public class LoginAndRegisterRestController
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<RegisterResponseDto> registerUser(@RequestBody @Valid RegisterRequest registerRequest) {
+        log.info("Register request: " + registerRequest.toString());
         final RegisterResponseDto userResponse = loginAndRegisterService.register(registerRequest);
 
         log.info("User registered: {}", userResponse);

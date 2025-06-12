@@ -12,6 +12,9 @@ import java.util.Optional;
 
 @Repository
 public interface HobbyRepository extends JpaRepository<Hobby, Long> {
+
+    Optional<Hobby> findByName(com.team.backend.model.Enum.Hobby name);
+
     //Optional<Hobby> findByHobbyName(String hobbyName2);
 
     //Optional<Hobby> findByName(com.team.backend.model.Enum.Hobby hobbyName);

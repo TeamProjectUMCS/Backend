@@ -26,6 +26,7 @@ public class Hobby
     public String getHobbyName() {
         return name.getDisplayName();
     }
+
     @JsonCreator
     public static Hobby fromString(String hobbyName) {
         Hobby hobby = new Hobby();
