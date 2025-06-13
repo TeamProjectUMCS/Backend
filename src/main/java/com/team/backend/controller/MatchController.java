@@ -51,7 +51,7 @@ public class MatchController {
         }
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<MatchDto>> getUserMatches(Authentication authentication) {
         String username = authentication.getName();
         User currentUser = userService.getUserByUsername(username);
