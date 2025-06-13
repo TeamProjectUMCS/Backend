@@ -55,6 +55,7 @@ public class SecurityConfig {
                         .requestMatchers("/chat/**").authenticated()
                         .requestMatchers("/ws/**").permitAll()
                         .requestMatchers("/profile/**").permitAll()
+                        .requestMatchers("/discover/**").permitAll()
                         // wszystkie endpointy
                         //.requestMatchers(HttpMethod.GET, "/patient/{accessId}").permitAll()
                         .anyRequest().authenticated()
