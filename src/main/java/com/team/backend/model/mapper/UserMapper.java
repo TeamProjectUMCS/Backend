@@ -23,14 +23,17 @@ public class UserMapper {
         List<Hobby> hobbies = userRequest.hobbies().stream()
                 .map(hobbyEntity -> {
                     com.team.backend.model.Enum.Hobby enumHobby = hobbyEntity.getName();
-                    return hobbyRepository.findByName(enumHobby)
-                            .orElseGet(() -> {
-                                Hobby newHobby = new Hobby();
-                                newHobby.setName(enumHobby);
-                                return hobbyRepository.save(newHobby);
-                            });
+                    List<Hobby> existing = hobbyRepository.findByName(enumHobby);
+                    if (!existing.isEmpty()) {
+                        return existing.get(0);
+                    } else {
+                        Hobby newHobby = new Hobby();
+                        newHobby.setName(enumHobby);
+                        return hobbyRepository.save(newHobby);
+                    }
                 })
                 .collect(Collectors.toList());
+
 
         log.debug(hobbies.toString());
 

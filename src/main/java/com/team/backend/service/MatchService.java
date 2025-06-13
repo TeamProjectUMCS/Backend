@@ -1,5 +1,6 @@
 package com.team.backend.service;
 
+import com.team.backend.exception.GlobalExceptionHandler;
 import com.team.backend.model.Enum.Sex;
 import com.team.backend.model.Hobby;
 import com.team.backend.model.Enum.LikedStatus;
@@ -14,6 +15,7 @@ import com.team.backend.repository.MessageRepository;
 import com.team.backend.repository.PendingPairRepository;
 import com.team.backend.repository.UserRepository;
 import com.team.backend.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -111,7 +113,8 @@ public class MatchService {
 
         pendingPairService.updatePairStatus(pendingPair, likingUser, LikedStatus.LIKED);
 
-        if (pendingPairService.bothUsersLiked(pendingPair)) {
+        if (pendingPairService.bothUsersLiked(pendingPair))
+        {
             matchRepository.save(new Match(likingUser, likedUser));
             pendingPairService.deletePendingPair(pendingPair);
             return true;
@@ -143,5 +146,7 @@ public class MatchService {
         hobbyIds1.retainAll(hobbyIds2);
         return !hobbyIds1.isEmpty();
     }
+
+
 }
 
